@@ -1,0 +1,130 @@
+[
+  {
+    "model": "checkup.question",
+    "pk": 1,
+    "fields": {
+      "text": "Weight (kg)",
+      "question_type": "NUM"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 2,
+    "fields": {
+      "text": "Heart Rate (bpm)",
+      "question_type": "NUM"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 3,
+    "fields": {
+      "text": "Body Temperature (°C)",
+      "question_type": "NUM"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 4,
+    "fields": {
+      "text": "Blood Sugar Level (mg/dL)",
+      "question_type": "NUM"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 5,
+    "fields": {
+      "text": "Blood Pressure (mmHg)",
+      "question_type": "NUM"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 6,
+    "fields": {
+      "text": "Do you have chest pain?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 7,
+    "fields": {
+      "text": "Do you have joint pain?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 8,
+    "fields": {
+      "text": "Do you have headache?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 9,
+    "fields": {
+      "text": "Do you have fatigue?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 10,
+    "fields": {
+      "text": "Do you have dizziness?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 11,
+    "fields": {
+      "text": "Do you have shortness of breath?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 12,
+    "fields": {
+      "text": "Do you have cough?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 13,
+    "fields": {
+      "text": "Do you have nausea or vomiting?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 14,
+    "fields": {
+      "text": "Are you taking any medications?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 15,
+    "fields": {
+      "text": "Any previous medical conditions?",
+      "question_type": "BOOL"
+    }
+  },
+  {
+    "model": "checkup.question",
+    "pk": 16,
+    "fields": {
+      "text": "Describe any unusual symptoms you are experiencing",
+      "question_type": "TEXT"
+    }
+  }
+]

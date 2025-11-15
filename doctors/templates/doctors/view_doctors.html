@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+        .doctor-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .doctor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        .doctor-card img {
+            height: 150px;
+            object-fit: cover;
+        }
+        .doctor-card .card-body {
+            text-align: center;
+            padding: 10px 5px;
+        }
+        .doctor-card .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .doctor-card .card-text {
+            font-size: 0.85rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-4">
+    <h1 class="text-center mb-4">Our Doctors</h1>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for doctor in doctors %}
+        <div class="col">
+            <div class="card doctor-card">
+                {% if doctor.image %}
+                <img src="{{ doctor.image.url }}" class="card-img-top" alt="{{ doctor.name }}">
+                {% else %}
+                <img src="{% static 'default-doctor.png' %}" class="card-img-top" alt="No image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ doctor.name }}</h5>
+                    <p class="card-text">{{ doctor.department.name }}</p>
+                    <p class="card-text">{{ doctor.contact_number }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

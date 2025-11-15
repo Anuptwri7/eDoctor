@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Health Checkup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #baeaff 0%, #e0c3fc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Roboto', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255,255,255,0.90);
+            border-radius: 32px;
+            box-shadow: 0 10px 42px rgba(44,62,80,.14);
+            border: 1px solid rgba(120,183,255,0.13);
+            padding: 38px 34px 30px 34px;
+            backdrop-filter: blur(12px);
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+        }
+        .glass-card:before {
+            content:"";
+            position: absolute;
+            left: -55px; top: -60px;
+            width: 142px; height: 142px;
+            background: radial-gradient(circle, #aee9ff90 0%, #e0c3fc77 90%);
+            filter: blur(29px);
+            z-index: 0;
+        }
+        .checkup-title {
+            text-align: center;
+            margin-bottom: 18px;
+            color: #228be6;
+            font-weight: 700;
+            font-size: 2.1rem;
+            position: relative;
+            z-index: 2;
+        }
+        form {
+            z-index: 2;
+            position: relative;
+        }
+        form label {
+            font-weight: 500;
+            color: #2b2e4a;
+            font-size: 1.09rem;
+            margin-bottom: 6px;
+        }
+        form input[type="number"],
+        form input[type="text"],
+        form select {
+            display: block;
+            width: 100%;
+            border-radius: 12px;
+            border: 1.5px solid #e0e5e9;
+            box-shadow: none;
+            background: rgba(245,250,255,.82);
+            margin-bottom: 20px;
+            padding: 11px 14px;
+            font-size: 1.08rem;
+            outline: none;
+            transition: border-color .17s, box-shadow .14s;
+        }
+        form input:focus,
+        form select:focus {
+            border-color: #43e97b;
+            box-shadow: 0 2px 10px #43e97b22;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px 0;
+            border-radius: 16px;
+            font-size: 1.13rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(44,62,80,0.08);
+            border: none;
+            transition: background .22s, transform .16s;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+            transform: scale(1.03);
+        }
+        @media (max-width:576px) {
+            .glass-card { padding: 16px 2vw; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-card">
+        <h2 class="checkup-title">Start Health Checkup</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+                <label>{{ question.text }}</label><br>
+                {% if question.question_type == 'NUM' %}
+                    <input type="number" name="question_{{ question.id }}" required>
+                {% elif question.question_type == 'BOOL' %}
+                    <select name="question_{{ question.id }}">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                {% else %}
+                    <input type="text" name="question_{{ question.id }}">
+                {% endif %}
+            {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
