@@ -98,7 +98,7 @@ def start_checkup_view(request):
         possible_diseases = [d for d, pts in disease_points.items() if pts > 0]
 
         # -------------------------------
-        # 4️⃣ Map diseases to departments
+        #  Map diseases to departments
         # -------------------------------
         disease_department_map = {
             "Heart Disease / Angina": "Cardiology",
