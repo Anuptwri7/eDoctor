@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Question, Response, CheckupSubmission
 from doctors.models import Doctor
@@ -137,3 +137,20 @@ def start_checkup_view(request):
 
     # GET request → show checkup form
     return render(request, 'checkup/start_checkup.html', {'questions': questions})
+@login_required
+def checkup_list_view(request):
+    # Fetch only checkups for the current logged-in user
+    current_user = request.user
+    checkups = CheckupSubmission.objects.filter(user=current_user).order_by('-created_at')
+    return render(request, "checkup/checkup_list.html", {"checkups": checkups})
+
+@login_required
+def checkup_detail_view(request, pk):
+    # Ensure the checkup belongs to the logged-in user
+    current_user = request.user
+    checkup = get_object_or_404(CheckupSubmission, pk=pk, user=current_user)
+    responses = checkup.responses.select_related('question')
+    return render(request, "checkup/checkup_detail.html", {
+        "checkup": checkup,
+        "responses": responses
+    })

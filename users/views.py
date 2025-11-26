@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
@@ -68,3 +68,4 @@ def home_view(request):
 @login_required
 def contact_view(request):
     return render(request, 'users/contact.html')
+
