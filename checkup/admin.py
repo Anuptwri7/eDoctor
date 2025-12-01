@@ -1,17 +1,11 @@
 from django.contrib import admin
 from .models import Question, Response, CheckupSubmission
 
-# -------------------------------
-# Question Admin
-# -------------------------------
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('text', 'question_type')
 
 
-# -------------------------------
-# Inline for Responses under a Submission
-# -------------------------------
 class ResponseInline(admin.TabularInline):
     model = Response
     extra = 0
@@ -20,9 +14,6 @@ class ResponseInline(admin.TabularInline):
     show_change_link = False
 
 
-# -------------------------------
-# CheckupSubmission Admin
-# -------------------------------
 @admin.register(CheckupSubmission)
 class CheckupSubmissionAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'created_at', 'response_count')

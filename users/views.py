@@ -23,7 +23,7 @@ def register_view(request):
             messages.success(request, 'Registration successful. You can now log in.')
             return redirect('login')
         else:
-            # Print form errors to console for debugging
+
             print(form.errors)
             messages.error(request, 'Registration failed. Please check the form and try again.')
     else:
@@ -56,14 +56,14 @@ def home_view(request):
     user = request.user
     banners = Banner.objects.filter(is_active=True)
     total_doctors = Doctor.objects.count()
-# fetch total number of doctors
+
     total_checkups = CheckupSubmission.objects.filter(user=user).count()
-    # you can also add upcoming checkups and pending reports dynamically
+
     return render(request, 'users/home.html', {
         "banners": banners,
         "total_doctors": total_doctors,
-        "total_checkups": total_checkups,  # replace with dynamic data if available
-        "pending_reports": 3      # replace with dynamic data if available
+        "total_checkups": total_checkups,
+        "pending_reports": 3
     })
 @login_required
 def contact_view(request):

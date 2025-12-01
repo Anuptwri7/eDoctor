@@ -8,17 +8,12 @@ def start_checkup_view(request):
     questions = Question.objects.all()
 
     if request.method == 'POST':
-        # -------------------------------
-        # 1️⃣ Create a new submission
-        # -------------------------------
+
         submission = CheckupSubmission.objects.create(user=request.user)
 
-        # List to hold responses for showing in results
+
         responses_list = []
 
-        # -------------------------------
-        # 2️⃣ Save responses
-        # -------------------------------
         for question in questions:
             answer = request.POST.get(f'question_{question.id}')
             Response.objects.create(
@@ -32,13 +27,11 @@ def start_checkup_view(request):
                 'type': question.question_type
             })
 
-        # -------------------------------
-        # 3️⃣ AI disease calculation
-        # -------------------------------
+
         disease_points = {}
 
         ai_rules = {
-            # Numeric rules
+
             "blood pressure": {
                 "Hypertension": lambda v: 2 if v > 140 else 0,
                 "Low Blood Pressure": lambda v: 2 if v < 90 else 0,
@@ -60,7 +53,6 @@ def start_checkup_view(request):
                 "Underweight / Malnutrition": lambda v: 1 if v < 40 else 0,
             },
 
-            # Boolean rules
             "do you have chest pain?": {
                 "Heart Disease / Angina": lambda ans: 3 if ans.lower() == "yes" else 0,
             },
@@ -97,9 +89,6 @@ def start_checkup_view(request):
 
         possible_diseases = [d for d, pts in disease_points.items() if pts > 0]
 
-        # -------------------------------
-        #  Map diseases to departments
-        # -------------------------------
         disease_department_map = {
             "Heart Disease / Angina": "Cardiology",
             "Hypertension": "Cardiology",
@@ -125,9 +114,6 @@ def start_checkup_view(request):
 
         recommended_doctors = Doctor.objects.filter(department__name__in=recommended_departments)
 
-        # -------------------------------
-        # 5️⃣ Render results page
-        # -------------------------------
         return render(request, 'checkup/results.html', {
             'responses': responses_list,
             'possible_diseases': possible_diseases or ["No specific disease detected."],
@@ -135,11 +121,11 @@ def start_checkup_view(request):
             'recommended_doctors': recommended_doctors
         })
 
-    # GET request → show checkup form
+
     return render(request, 'checkup/start_checkup.html', {'questions': questions})
 @login_required
 def checkup_list_view(request):
-    # Fetch only checkups for the current logged-in user
+
     current_user = request.user
     checkups = CheckupSubmission.objects.filter(user=current_user).order_by('-created_at')
     return render(request, "checkup/checkup_list.html", {"checkups": checkups})
@@ -159,7 +145,7 @@ def recheck_checkup_view(request, pk):
     checkup = get_object_or_404(CheckupSubmission, pk=pk, user=request.user)
     saved_responses = checkup.responses.select_related('question')
 
-    # Convert saved responses into the format used earlier
+
     responses_list = []
     for r in saved_responses:
         responses_list.append({
@@ -168,9 +154,7 @@ def recheck_checkup_view(request, pk):
             "type": r.question.question_type
         })
 
-    # -------------------------------
-    # AI RULES (same as your original)
-    # -------------------------------
+
     disease_points = {}
 
     ai_rules = {
@@ -195,7 +179,7 @@ def recheck_checkup_view(request, pk):
             "Underweight / Malnutrition": lambda v: 1 if v < 40 else 0,
         },
 
-        # Boolean rules
+
         "do you have chest pain?": {
             "Heart Disease / Angina": lambda ans: 3 if ans.lower() == "yes" else 0,
         },
@@ -213,7 +197,6 @@ def recheck_checkup_view(request, pk):
         },
     }
 
-    # Calculate points
     for r in responses_list:
         key = r["text"].lower()
         answer = r["answer"]
@@ -233,12 +216,9 @@ def recheck_checkup_view(request, pk):
                 for disease, func in ai_rules[key].items():
                     disease_points[disease] = disease_points.get(disease, 0) + func(answer)
 
-    # Final disease list
+
     possible_diseases = [d for d, pts in disease_points.items() if pts > 0]
 
-    # -------------------------------
-    # Department mapping
-    # -------------------------------
     disease_department_map = {
         "Heart Disease / Angina": "Cardiology",
         "Hypertension": "Cardiology",
@@ -263,9 +243,6 @@ def recheck_checkup_view(request, pk):
 
     recommended_doctors = Doctor.objects.filter(department__name__in=recommended_departments)
 
-    # -------------------------------
-    # Render same result page
-    # -------------------------------
     return render(request, "checkup/results.html", {
         "responses": responses_list,
         "possible_diseases": possible_diseases or ["No specific disease detected."],
