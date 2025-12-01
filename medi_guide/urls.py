@@ -17,6 +17,7 @@ urlpatterns = [
     path('', include('users.urls')),
     path('checkup/', include('checkup.urls')),
     path('', include('doctors.urls')),
+    path("chatbot/", include("chatbot.urls")),
 ]
 
 if settings.DEBUG:

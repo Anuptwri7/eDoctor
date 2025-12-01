@@ -29,6 +29,8 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})
+def chatbot_page(request):
+    return render(request, "chatbot/chat.html")
 
 def login_view(request):
     if request.method == 'POST':

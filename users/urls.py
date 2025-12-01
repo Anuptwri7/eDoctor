@@ -10,5 +10,6 @@ urlpatterns = [
     path('contact/', views.contact_view, name='contact'),
     path("checkups/", checkup_views.checkup_list_view, name="checkup_list"),
     path("checkups/<int:pk>/", checkup_views.checkup_detail_view, name="checkup_detail"),
+    path('chatbot/', views.chatbot_page, name='chatbot_page'),
 ]
 
